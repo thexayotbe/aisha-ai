@@ -12,8 +12,8 @@ export const pwIsSame = (value1: string, value2: string) => {
 export const dataFilter = (
   userData: object,
   setUserData: any,
-  e: any,
-  setPasswordConfirm: any
+  e: React.ChangeEvent<HTMLInputElement>,
+  setPasswordConfirm: any,
 ) => {
   if (e.target.name === "consent")
     return setUserData({

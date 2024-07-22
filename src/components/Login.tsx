@@ -6,7 +6,7 @@ const Login = () => {
   const navigate = useNavigate();
   const signIn = useSignIn();
   const [loginData, setLoginData] = useState({});
-  const getData = (e: any) => {
+  const getData = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(loginData);
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
