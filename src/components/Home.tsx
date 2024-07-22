@@ -7,7 +7,7 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import axios from "axios";
 import { PiDotsThree } from "react-icons/pi";
 import { CgRename } from "react-icons/cg";
-import { MdDeleteOutline, MdOutlineDone } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 
 import {
   DropdownMenu,
@@ -25,11 +25,7 @@ export default function Home() {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [chats, setChats] = useState<IChat[]>([]);
   const [loading, setLoading] = useState(false);
-  const [isEditName, setIsEditName] = useState(false);
-  const [chat, setChat] = useState({
-    name: "",
-    id: 0,
-  });
+
   const getChats = async () => {
     const response = await axios.get("http://46.101.154.68/users/me/chats/", {
       headers: {
@@ -105,6 +101,7 @@ export default function Home() {
       console.error("Error sending message:", error);
     }
   };
+
   const sendMessage = async (id: number) => {
     const quest = question;
     setQuestion("");
@@ -171,28 +168,6 @@ export default function Home() {
     }
   };
 
-  const editChatName = async () => {
-    const url = `http://46.101.154.68/chats/${chat.id}/name/`;
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: authHeader,
-    };
-    try {
-      const response = await axios.put(
-        url,
-        {
-          name: chat.name,
-        },
-        {
-          headers,
-        },
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className="w-full h-[100vh] bg-black  flex justify-center gap-4 items-center">
       <div className="w-[18vw] h-[100vh] bg-[#222222] p-5 flex flex-col">
@@ -224,39 +199,29 @@ export default function Home() {
                     chat.id === messages[0]?.chat_id && "bg-[#313131]"
                   } rounded-md text-sm w-full h-[48px] flex items-center justify-top pl-4 gap-4  hover:bg-[#313131] transition-all`}
                 >
-                  {isEditName ? (
-                    <input className="input_chat_name" value={chat.name} />
-                  ) : (
-                    <>
-                      <img src="/chat.svg" alt="" /> {chat.name}{" "}
-                    </>
-                  )}
+                  <img src="/chat.svg" alt="" /> {chat.name}{" "}
                   <div className="ml-auto">
-                    {isEditName ? (
-                      <MdOutlineDone onClick={editChatName} />
-                    ) : (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <PiDotsThree />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem>
-                            <div className="flex justify-center gap-4 items-center h-[20px] cursor-pointer">
-                              <CgRename /> Rename
-                            </div>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <div
-                              onClick={() => deleteChat(chat.id)}
-                              className="flex justify-center gap-4 items-center h-[20px] text-red-500 cursor-pointer"
-                            >
-                              <MdDeleteOutline />
-                              Delete
-                            </div>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    )}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <PiDotsThree />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <div className="flex justify-center gap-4 items-center h-[20px] cursor-pointer">
+                            <CgRename /> Rename
+                          </div>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <div
+                            onClick={() => deleteChat(chat.id)}
+                            className="flex justify-center gap-4 items-center h-[20px] text-red-500 cursor-pointer"
+                          >
+                            <MdDeleteOutline />
+                            Delete
+                          </div>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </button>
               );
@@ -280,7 +245,7 @@ export default function Home() {
       <div className="w-[82vw] bg-[#222222] rounded-xl h-[97vh]   overflow-y-auto">
         {startChat ? (
           <Chat
-            sendMessage={sendMessage}
+            sendMessage={() => sendMessage(0)}
             messages={messages}
             value={question}
             onInputChange={handleInputChange(question, setQuestion)}

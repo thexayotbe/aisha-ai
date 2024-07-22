@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { dataFilter, pwCheck, pwIsSame } from "../lib/userDataHandler";
-import { ApiResponse, User } from "../interfaces";
+import { User } from "../interfaces";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 
@@ -28,7 +28,8 @@ export const SignUp = () => {
     consent: "",
   });
 
-  const passwordHandler = (e: any) => {
+  const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(pwStatus);
     getDataHandler(e);
     setPwStatus({
       status: pwCheck(e.target.value),
@@ -36,7 +37,7 @@ export const SignUp = () => {
     });
   };
 
-  const getDataHandler = (e: any) => {
+  const getDataHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     dataFilter(userData, setUserData, e, setPasswordConfirm);
   };
   const addUserHandler = async (event: React.FormEvent<HTMLFormElement>) => {

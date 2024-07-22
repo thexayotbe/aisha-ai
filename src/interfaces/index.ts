@@ -15,7 +15,7 @@ export interface User {
   birth_date: string;
   phone_number: string;
   consent: string;
-  id: number;
+  id?: number;
 }
 export interface ApiResponse {
   user: User;

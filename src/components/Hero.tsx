@@ -2,8 +2,7 @@ import axios from "axios";
 import { hero_cards } from "../constants";
 import React, { useEffect } from "react";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import { User } from "../interfaces";
+import Loader from "./ui/Loader";
 
 interface ChildProps {
   handleStartChat: () => void; // Adjust the function type as needed
@@ -19,7 +18,6 @@ const Hero: React.FC<ChildProps> = ({
   loading,
 }) => {
   const authHeader = useAuthHeader();
-  const auth = useAuthUser() as User;
   useEffect(() => {
     const fetchDt = async () => {
       const respose = await axios.get(`http://46.101.154.68/users/me/`, {
@@ -43,6 +41,7 @@ const Hero: React.FC<ChildProps> = ({
         <input
           value={value}
           onChange={onInputChange}
+          disabled={loading}
           type="text"
           className="bg-transparent w-full h-full text-white placeholder:text-[#656565] px-4  focus:border-none focus-visible:outline-none focus-visible:ring-0 "
           placeholder="Aisha dan nimadir so’ramoqchimisiz?"
@@ -51,17 +50,23 @@ const Hero: React.FC<ChildProps> = ({
           }
         />
 
-        <img
-          src="/mic.svg"
-          alt=""
-          className="w-[20px] h-[20px] cursor-pointer"
-        />
-        <button
-          className="w-[50px] h-[43px] bg-[#019A5A] flex items-center justify-center rounded-lg"
-          onClick={handleStartChat}
-        >
-          <img src="/send.svg" alt="" />
-        </button>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <img
+              src="/mic.svg"
+              alt=""
+              className="w-[20px] h-[20px] cursor-pointer"
+            />
+            <button
+              className="w-[50px] h-[43px] bg-[#019A5A] flex items-center justify-center rounded-lg"
+              onClick={handleStartChat}
+            >
+              <img src="/send.svg" alt="" />
+            </button>
+          </>
+        )}
       </div>
       <div className="flex w-[720px] justify-between mt-20">
         {hero_cards.map((item) => {
