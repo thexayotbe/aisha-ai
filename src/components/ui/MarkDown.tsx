@@ -1,39 +1,33 @@
+// Markdown.tsx
 import React from "react";
-import ReactMarkdown, { CodeProps } from "react-markdown";
+import ReactMarkdown from "react-markdown";
+import CodeBlock from "./CodeBlock";
 
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-
-interface FormattedTextProps {
+interface MarkdownProps {
   text: string;
 }
 
-const FormattedText: React.FC<FormattedTextProps> = ({ text }) => {
+const Markdown: React.FC<MarkdownProps> = ({ text }) => {
   return (
     <ReactMarkdown
+      children={text}
       components={{
-        code({ className, children, ...props }: CodeProps) {
+        code({ className, children, ...props }) {
+          const language = className ? className.replace("language-", "") : "";
           const match = /language-(\w+)/.exec(className || "");
-          return match ? (
-            <SyntaxHighlighter
-              style={materialDark}
-              language={match[1]}
-              PreTag="div"
-              {...props}
-            >
-              {String(children).replace(/\n$/, "")}
-            </SyntaxHighlighter>
+
+          return !match ? (
+            <CodeBlock
+              language={language}
+              value={String(children).replace(/\n$/, "")}
+            />
           ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
+            <code {...props}>{children}</code>
           );
         },
       }}
-    >
-      {text}
-    </ReactMarkdown>
+    />
   );
 };
 
-export default FormattedText;
+export default Markdown;

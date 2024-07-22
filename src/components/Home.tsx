@@ -145,7 +145,7 @@ export default function Home() {
     setQuestion("");
   };
   const handleInputChange =
-    (value: string, setValue: React.Dispatch<React.SetStateAction<string>>) =>
+    (setValue: React.Dispatch<React.SetStateAction<string>>) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
     };
@@ -248,14 +248,14 @@ export default function Home() {
             sendMessage={() => sendMessage(0)}
             messages={messages}
             value={question}
-            onInputChange={handleInputChange(question, setQuestion)}
+            onInputChange={handleInputChange(setQuestion)}
             loading={loading}
           />
         ) : (
           <Hero
             handleStartChat={handleStartChat}
             value={question}
-            onInputChange={handleInputChange(question, setQuestion)}
+            onInputChange={handleInputChange(setQuestion)}
             loading={loading}
           />
         )}
