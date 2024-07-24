@@ -8,6 +8,9 @@ import axios from "axios";
 import { PiDotsThree } from "react-icons/pi";
 import { CgRename } from "react-icons/cg";
 import { MdDeleteOutline } from "react-icons/md";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
+
+const url = "https://aisha-app-zv3mo.ondigitalocean.app";
 
 import {
   DropdownMenu,
@@ -15,10 +18,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const auth = useAuthUser() as User;
   const authHeader = useAuthHeader();
+  const signOut = useSignOut();
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [startChat, setStartChat] = useState(false);
   const [question, setQuestion] = useState<string>("");
@@ -27,7 +33,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const getChats = async () => {
-    const response = await axios.get("http://46.101.154.68/users/me/chats/", {
+    const response = await axios.get(`${url}/users/me/chats/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: authHeader,
@@ -35,16 +41,17 @@ export default function Home() {
     });
     setChats(response.data);
   };
+  const logOut = () => {
+    signOut();
+    navigate("/auth");
+  };
   const getChatMessages = async (id: number) => {
-    const response = await axios.get(
-      `http://46.101.154.68/chats/${id}/messages/`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authHeader,
-        },
+    const response = await axios.get(`${url}/chats/${id}/messages/`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader,
       },
-    );
+    });
     console.log(response.data);
     setMessages(response.data);
     setStartChat(true);
@@ -68,7 +75,7 @@ export default function Home() {
     };
     setMessages((prevResponses) => [...prevResponses, newMessage]);
 
-    const url = "http://46.101.154.68/ai_assistant";
+    const reqUrl = `${url}/ai_assistant`;
     const headers = {
       "Content-Type": "application/json",
       Authorization: authHeader,
@@ -81,7 +88,7 @@ export default function Home() {
     };
 
     try {
-      const response = await axios.post(url, data, {
+      const response = await axios.post(reqUrl, data, {
         headers,
         responseType: "stream",
       });
@@ -112,7 +119,7 @@ export default function Home() {
       role: "user",
     };
     setMessages((prevResponses) => [...prevResponses, newMessage]);
-    const url = "http://46.101.154.68/ai_assistant";
+    const reqUrl = `${url}/ai_assistant`;
     const headers = {
       "Content-Type": "application/json",
       Authorization: authHeader,
@@ -124,7 +131,7 @@ export default function Home() {
     };
 
     try {
-      const response = await axios.post(url, data, {
+      const response = await axios.post(reqUrl, data, {
         headers,
         responseType: "stream",
       });
@@ -152,7 +159,7 @@ export default function Home() {
 
   const deleteChat = async (chatId: number) => {
     try {
-      await axios.delete(`http://46.101.154.68/chats/${chatId}`, {
+      await axios.delete(`${url}/chats/${chatId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: authHeader,
@@ -236,7 +243,10 @@ export default function Home() {
           <button className="text-white  rounded-md text-sm w-full h-[48px] flex items-center justify-top pl-4 gap-4  hover:bg-[#313131] transition-all">
             <img src="/faq.svg" alt="" /> Uptades & FAQ
           </button>
-          <button className="text-red-500  rounded-md text-sm w-full h-[48px] flex items-center justify-top pl-4 gap-4  hover:bg-[#313131] transition-all">
+          <button
+            onClick={logOut}
+            className="text-red-500  rounded-md text-sm w-full h-[48px] flex items-center justify-top pl-4 gap-4  hover:bg-[#313131] transition-all"
+          >
             <img src="/logout.svg" alt="" />
             Log out
           </button>

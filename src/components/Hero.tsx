@@ -1,8 +1,8 @@
-import axios from "axios";
 import { hero_cards } from "../constants";
-import React, { useEffect } from "react";
-import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import React from "react";
 import Loader from "./ui/Loader";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { User } from "../interfaces";
 
 interface ChildProps {
   handleStartChat: () => void; // Adjust the function type as needed
@@ -17,24 +17,14 @@ const Hero: React.FC<ChildProps> = ({
   onInputChange,
   loading,
 }) => {
-  const authHeader = useAuthHeader();
-  useEffect(() => {
-    const fetchDt = async () => {
-      const respose = await axios.get(`http://46.101.154.68/users/me/`, {
-        headers: {
-          // "Content-Type": "application/json",
-          Authorization: authHeader,
-        },
-      });
-      console.log(respose);
-    };
-    fetchDt();
-  });
+  const user = useAuthUser() as User;
   return (
     <div className="w-full h-[97vh]  bg-[#222222] flex justify-center items-center flex-col relative overflow-y-hidden">
       <img src="/logo.svg" alt="" className="w-[99px] h-[100px]" />
       <h3 className="text-center w-[710px] text-4xl font-sans font-bold leading-relaxed my-16 text-white">
-        Assalomu alaykum <span className="text-[#019A5A]">Muhammad</span> <br />
+        Assalomu alaykum{" "}
+        <span className="text-[#019A5A] uppercase">{user?.first_name}</span>{" "}
+        <br />
         Bugun sizga qanday yordam bera olaman?
       </h3>
       <div className="flex w-[720px] h-[56px] bg-[#2d2d2d] border-[0.2px] border-[#E5E5E5] rounded-lg items-center gap-5 px-2 z-10">

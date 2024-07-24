@@ -17,6 +17,7 @@
     "@types/http-proxy-middleware": "^1.0.0",
     "@types/marked": "^6.0.0",
     "@types/qs": "^6.9.15",
+    "antd": "^5.19.3",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "highlight.js": "^11.10.0",

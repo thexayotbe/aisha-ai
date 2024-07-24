@@ -1,12 +1,15 @@
 // http://68.183.214.151/
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "sonner";
 import { dataFilter, pwCheck, pwIsSame } from "../lib/userDataHandler";
 import { User } from "../interfaces";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { notification } from "antd";
+import Loader from "./ui/Loader";
+type NotificationType = "success" | "error";
+const url = "https://aisha-app-zv3mo.ondigitalocean.app";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -17,6 +20,11 @@ export const SignUp = () => {
     status: true,
     areSame: true,
   });
+  const [loading, setLoading] = useState(false);
+  const [notificationType, setNotificationType] =
+    useState<NotificationType | null>(null);
+  const [api] = notification.useNotification();
+
   const [userData, setUserData] = useState<User>({
     first_name: "",
     last_name: "",
@@ -27,6 +35,25 @@ export const SignUp = () => {
     phone_number: "",
     consent: "",
   });
+
+  useEffect(() => {
+    if (notificationType) {
+      api[notificationType]({
+        message: `${notificationType === "success" ? "Muvaffaqiyatli" : "Xatolik"}`,
+        description: `${
+          notificationType === "success"
+            ? "Siz muvaffaqiyatli kirdingiz"
+            : "Login yoki parol noto'g'ri"
+        }`,
+        placement: "bottomRight",
+        style: {
+          backgroundColor: "white",
+          borderRadius: "10px",
+        },
+      });
+      setNotificationType(null); // Reset the notification type after showing the notification
+    }
+  }, [notificationType, api]);
 
   const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(pwStatus);
@@ -43,17 +70,13 @@ export const SignUp = () => {
   const addUserHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (firstPageFilled) return setFirstPageFilled(false);
+    setLoading(true);
     try {
-      const response = await axios.post(
-        "http://46.101.154.68/users",
-        userData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await axios.post(`${url}/users`, userData, {
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
-      console.log(response);
+      });
       const { user, access_token } = response.data;
 
       if (
@@ -65,12 +88,15 @@ export const SignUp = () => {
           userState: { ...user },
         })
       ) {
-        toast("Success");
+        setLoading(false);
         navigate("/");
       }
     } catch (error) {
       console.log(error);
-      toast("Xatolik");
+      setLoading(false);
+
+      setNotificationType("error");
+
       // navigate("/auth/signup");
     }
   };
@@ -178,8 +204,14 @@ export const SignUp = () => {
               </div>
             </>
           )}
-          <button className="button" type="submit">
-            Keyingisi
+          <button className="button" type="submit" disabled={loading}>
+            {loading ? (
+              <Loader />
+            ) : firstPageFilled ? (
+              "Keyingisi"
+            ) : (
+              "Ro`yxatan o`tish"
+            )}
           </button>
         </form>
       </div>
