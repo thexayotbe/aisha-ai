@@ -56,7 +56,6 @@ export const SignUp = () => {
   }, [notificationType, api]);
 
   const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(pwStatus);
     getDataHandler(e);
     setPwStatus({
       status: pwCheck(e.target.value),
