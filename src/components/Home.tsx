@@ -79,7 +79,6 @@ export default function Home() {
         content: res,
         role: "assistant",
       };
-      getChats();
 
       setMessages((prevResponses) => [...prevResponses, newMessage]);
     } catch (error) {
@@ -88,7 +87,8 @@ export default function Home() {
     }
   };
 
-  const sendMessage = async (id: number) => {
+  const sendMessage = async (id: number | undefined) => {
+    if (typeof id == "undefined") throw new Error("Id is required");
     const quest = question;
     setQuestion("");
     setLoading(true);
@@ -124,7 +124,6 @@ export default function Home() {
       setMessages((prevResponses) => [...prevResponses, newMessage]);
 
       setLoading(false);
-      // getChats();
     } catch (error) {
       setLoading(false);
       console.error("Error sending message:", error);

@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+import tailwindcssAnimate from "tailwindcss-animate";
+
+export default {
   mode: "jit",
   darkMode: ["class"],
   content: [
@@ -55,7 +57,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
   corePlugins: {
     transitionProperty: true,
     transitionDuration: true,
