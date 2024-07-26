@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import Gradient from "./ui/Gradient";
 const AuthMain = () => {
   const navigate = useNavigate();
   return (
@@ -26,7 +26,7 @@ const AuthMain = () => {
           </div>
         </button>
       </div>
-      <img src="/gradient.svg" alt="" className="absolute bottom-0 z-auto" />{" "}
+      <Gradient />
     </div>
   );
 };

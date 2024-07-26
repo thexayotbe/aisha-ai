@@ -11,7 +11,7 @@ interface ChatWindowProps {
 const ChatComponent: React.FC<ChatWindowProps> = ({ messages }) => {
   return (
     <div className="w-full h-[90vh]  py-5 overflow-y-auto flex justify-center">
-      <div className="w-[80vw] flex flex-col">
+      <div className="lg:w-[80vw] w-[90vw] flex flex-col">
         {messages.map((item) => {
           return (
             <div
@@ -22,7 +22,7 @@ const ChatComponent: React.FC<ChatWindowProps> = ({ messages }) => {
                   : "bg-transparent mr-auto"
               } w-auto h-auto py-3 px-8  rounded-2xl max-w-[70%]  my-4 text-white`}
             >
-              <p className="text-[16px] text-justify leading-[40px]">
+              <p className="lg:text-[16px] text-justify lg:leading-[20px] text-[12px]">
                 <FormattedText text={item.content} />
               </p>
             </div>

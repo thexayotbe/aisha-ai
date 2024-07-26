@@ -4,7 +4,7 @@ import { IMessage } from "../interfaces";
 import Loader from "./ui/Loader";
 
 interface ChatWindowProps {
-  sendMessage: (id: number | string | undefined) => void; // Adjust the function type as needed
+  sendMessage: (id: number | undefined) => void; // Adjust the function type as needed
   loading: boolean;
   messages: IMessage[];
   value: string;

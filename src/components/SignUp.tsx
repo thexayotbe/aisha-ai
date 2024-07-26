@@ -10,6 +10,7 @@ import { notification } from "antd";
 import Loader from "./ui/Loader";
 type NotificationType = "success" | "error";
 const url = "https://aisha-app-zv3mo.ondigitalocean.app";
+import Gradient from "./ui/Gradient";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -214,7 +215,7 @@ export const SignUp = () => {
           </button>
         </form>
       </div>
-      <img src="/gradient.svg" alt="" className="absolute bottom-0 z-auto" />{" "}
+      <Gradient />
     </div>
   );
 };

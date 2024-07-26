@@ -5,6 +5,7 @@ import { ThemeProvider } from "./components/ui/theme-provider.tsx";
 import Root from "./root/index.tsx";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit";
+import Home from "./components/Home.tsx";
 const store = createStore({
   authName: "_auth",
   authType: "cookie",
@@ -16,7 +17,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Root />
+        {/* <Home /> */}
       </ThemeProvider>
     </BrowserRouter>
-  </AuthProvider>
+  </AuthProvider>,
 );

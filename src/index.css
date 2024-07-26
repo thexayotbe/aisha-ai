@@ -2,20 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    @apply font-sans;
+}
+
 .title {
-    @apply text-4xl font-normal font-mono uppercase mb-10 text-white;
+    @apply lg:text-4xl text-2xl  font-normal font-mono uppercase mb-10 text-white;
 }
+
 .side_title {
-    @apply text-sm font-normal font-mono uppercase  text-white;
+    @apply text-sm font-normal font-mono uppercase text-white;
 }
+
 .input {
-    @apply text-white bg-[#2e2e2d] border-[1px] border-[#6b6b6b] w-[554px] h-[56px] rounded-md placeholder:text-[#656565] px-4 focus:border-none focus-visible:outline-none focus-visible:ring-0;
+    @apply text-white bg-[#2e2e2d] border-[1px] border-[#6b6b6b] lg:w-[554px] md:w-[60vw] w-[90vw] h-[56px] rounded-md placeholder:text-[#656565] px-4 focus:border-none focus-visible:outline-none focus-visible:ring-0;
 }
+
 .input_chat_name {
     @apply text-white bg-[#2e2e2d] border-[1px] border-[#6b6b6b] w-full h-full rounded-md placeholder:text-[#656565] px-4 focus:border-none focus-visible:outline-none focus-visible:ring-0;
 }
+
 .input_short {
-    @apply text-white bg-[#2e2e2d] border-[1px] border-[#6b6b6b] w-[272px] h-[56px] rounded-md placeholder:text-[#656565] px-4 focus:border-none focus-visible:outline-none focus-visible:ring-0  hover:outline-none hover:ring-0;
+    @apply text-white bg-[#2e2e2d] border-[1px] border-[#6b6b6b] w-[272px]  h-[56px] rounded-md placeholder:text-[#656565] px-4 focus:border-none focus-visible:outline-none focus-visible:ring-0 hover:outline-none hover:ring-0;
 }
 
 .button {

@@ -3,6 +3,7 @@ import useSignIn from "react-auth-kit/hooks/useSignIn";
 import { useNavigate } from "react-router-dom";
 import { notification } from "antd";
 import Loader from "./ui/Loader";
+import Gradient from "./ui/Gradient";
 
 type NotificationType = "success" | "error";
 const url = "https://aisha-app-zv3mo.ondigitalocean.app";
@@ -104,11 +105,7 @@ const Login = () => {
         </form>
       </div>
       {contextHolder}
-      <img
-        src="/gradient.svg"
-        alt=""
-        className="absolute bottom-0 z-auto"
-      />{" "}
+      <Gradient />
     </div>
   );
 };
