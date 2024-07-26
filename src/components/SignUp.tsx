@@ -44,7 +44,7 @@ export const SignUp = () => {
         description: `${
           notificationType === "success"
             ? "Siz muvaffaqiyatli kirdingiz"
-            : "Login yoki parol noto'g'ri"
+            : `${pwStatus ? "Parol bir xil emas" : "Login yoki parol noto'g'ri`"} `
         }`,
         placement: "bottomRight",
         style: {
