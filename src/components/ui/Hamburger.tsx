@@ -11,7 +11,7 @@ const Hamburger: React.FC<HamburgerProps> = ({ isOpen, onClick }) => {
   return (
     <button
       className={`flex flex-col h-14 w-14 cursor-pointer bg-[#313131] rounded-xl justify-center items-center group absolute ${
-        isOpen ? "left-4 lg:right-4" : "left-4"
+        isOpen ? "lg:left-4 right-4" : "left-4"
       } z-20 top-7 p-1`}
       onClick={onClick}
     >
